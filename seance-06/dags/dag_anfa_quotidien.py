@@ -49,27 +49,8 @@ def analyser_heures_pointe():
 
 
 def verifier_resultats():
-    """Tâche 3 : vérifie que les Parquet sont bien dans MinIO. Échoue si vide."""
-    s3 = boto3.client(
-        "s3",
-        endpoint_url=os.environ["MINIO_ENDPOINT"],
-        aws_access_key_id=os.environ["MINIO_ACCESS_KEY"],
-        aws_secret_access_key=os.environ["MINIO_SECRET_KEY"],
-        region_name="us-east-1",
-    )
-    objets = s3.list_objects_v2(
-        Bucket="anfa-processed", Prefix="heures_de_pointe/",
-    ).get("Contents", [])
-
-    if not objets:
-        raise ValueError("[ERREUR] Aucun fichier de résultat trouvé dans MinIO !")
-
-    taille_ko = sum(o["Size"] for o in objets) / 1024
-    print(f"[OK] {len(objets)} fichiers trouvés ({taille_ko:.1f} Ko)")
-    for obj in objets[:5]:
-        print(f"  - {obj['Key']} ({obj['Size']} octets)")
-    if len(objets) > 5:
-        print(f"  ... et {len(objets) - 5} autres")
+    """Modifiée pour démonstration : force une erreur."""
+    raise ValueError("Erreur volontaire pour démontrer le retry d'Airflow")
 
 
 def notifier():
