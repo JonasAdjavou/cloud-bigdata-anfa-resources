@@ -31,11 +31,15 @@ def verifier_liste_fichiers(objets: list) -> dict:
     nb_fichiers = len(objets)
     taille_totale_octets = sum(o["Size"] for o in objets)
 
-    return {
+    """ return {
         "nb_fichiers": nb_fichiers,
         "taille_totale_ko": round(taille_totale_octets / 1024, 1),
-    }
+    } """
 
+    return {
+        "nb_fichiers": nb_fichiers,
+        "taille_totale_ko": round(taille_totale_octets / 1000, 1), # ← BUG : 1000 au lieu de 1024
+        }
 
 def construire_message_notification(resume: dict) -> str:
     """Construit le message de notification à partir du résumé de vérification."""
